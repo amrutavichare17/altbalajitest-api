@@ -22,8 +22,9 @@ router.get('/getToken',async(req,res)=>{
     var token=await jwtFunctions.createJWTToken();
     res.status(200).json({"message":"User created successfully","res":token});
 });
+// Create All User 
 router.post('/', async (req, res) => {
-    const user=mongoose.model("user");;
+    const user=mongoose.model("user");
     try {
         const newuserList = await user.insertMany(req.body);
         
@@ -37,5 +38,15 @@ router.post('/', async (req, res) => {
         console.log(e);
         res.status(200).json(userCreateError)
     }   
+});
+// Get All User 
+router.get('/', async (req, res) => {
+    try {
+        // Find all user
+        const user = await User.find();
+        res.json(user);
+    } catch (e) {
+        res.status(500).json({ message: e.message });
+    }
 });
 module.exports = router;
