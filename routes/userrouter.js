@@ -30,20 +30,25 @@ router.get('/getToken',async(req,res)=>{
 });
 // Create All User 
 router.post('/', async (req, res) => {
-    const user=mongoose.model("user");
-    try {
-        const newuserList = await user.insertMany(req.body);
-        
-        if(newuserList){
-            res.status(200).json({"message":"User created successfully","res":newuserList});
-        
-        }else{
+    if (Array.isArray(req.body)) {
+        const user=mongoose.model("user");
+        try {
+            const newuserList = await user.insertMany(req.body);
+            
+            if(newuserList){
+                res.status(200).json({"message":"User created successfully","res":newuserList});
+            
+            }else{
+                res.status(200).json(userCreateError)
+            }
+        } catch (e) {
+            console.log(e);
             res.status(200).json(userCreateError)
-        }
-    } catch (e) {
-        console.log(e);
-        res.status(200).json(userCreateError)
-    }   
+        }  
+    } else {
+        res.status(200).json(invalidRequestError)
+    }
+    
 });
 // Get All User 
 router.get('/', async (req, res) => {
@@ -52,7 +57,7 @@ router.get('/', async (req, res) => {
         const user = await User.find();
         res.json(user);
     } catch (e) {
-        res.status(500).json({ message: e.message });
+        res.status(200).json({ message: e.message });
     }
 });
 // Get User by id 
@@ -63,10 +68,10 @@ router.get('/:id', async (req, res) => {
         if(user){
             res.json(user);
         }else{
-            res.status(500).json(userNotFoundError);
+            res.status(200).json(userNotFoundError);
         }   
     } catch (e) {
-        res.status(500).json({ message: e.message });
+        res.status(200).json({ message: e.message });
     }
 });
 
@@ -95,7 +100,7 @@ router.put("/:id", async (req, res) => {
 		await user.save()
 		res.send(user)
 	} catch {
-		res.status(500)
+		res.status(200)
 		res.send(userNotFoundError)
 	}
 })
@@ -105,7 +110,7 @@ router.delete("/:id", async (req, res) => {
 		await User.deleteOne({ id: req.params.id })
 		res.status(200).send({"message":"User deleted successfully"});
 	} catch {
-		res.status(500)
+		res.status(200)
 		res.send({ error: "User doesn't exist!" });
 	}
 })
