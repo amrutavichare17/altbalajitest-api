@@ -70,6 +70,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// Update User by id 
 router.put("/:id", async (req, res) => {
 	try {
         // Find user by id. Here id is int which is in your requirment 
@@ -96,6 +97,16 @@ router.put("/:id", async (req, res) => {
 	} catch {
 		res.status(500)
 		res.send(userNotFoundError)
+	}
+})
+// Delete user by id
+router.delete("/:id", async (req, res) => {
+	try {
+		await User.deleteOne({ id: req.params.id })
+		res.status(200).send({"message":"User deleted successfully"});
+	} catch {
+		res.status(500)
+		res.send({ error: "User doesn't exist!" });
 	}
 })
 module.exports = router;
