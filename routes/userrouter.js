@@ -17,7 +17,7 @@ var userCreateError={
     "msg" : "Oops!! Something went wrong while creating user. Please contact support.",
     "status":"error"
 };
-var userNotFoundVerifyError={
+var userNotFoundError={
     "name":"USER_NOT_FOUND",
     "status":"error",
     "message":"User not found",
@@ -63,10 +63,39 @@ router.get('/:id', async (req, res) => {
         if(user){
             res.json(user);
         }else{
-            res.status(500).json(userNotFoundVerifyError);
+            res.status(500).json(userNotFoundError);
         }   
     } catch (e) {
         res.status(500).json({ message: e.message });
     }
 });
+
+router.put("/:id", async (req, res) => {
+	try {
+        // Find user by id. Here id is int which is in your requirment 
+		const user = await User.findOne({ id: req.params.id })
+
+		if (req.body.name) {
+			user.name = req.body.name
+		}
+
+		if (req.body.dob) {
+			user.dob = req.body.dob
+        }
+        
+        if (req.body.address) {
+			user.address = req.body.address
+        }
+        
+        if (req.body.state) {
+			user.state = req.body.state
+		}
+
+		await user.save()
+		res.send(user)
+	} catch {
+		res.status(500)
+		res.send(userNotFoundError)
+	}
+})
 module.exports = router;
