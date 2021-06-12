@@ -17,6 +17,12 @@ var userCreateError={
     "msg" : "Oops!! Something went wrong while creating user. Please contact support.",
     "status":"error"
 };
+var userNotFoundVerifyError={
+    "name":"USER_NOT_FOUND",
+    "status":"error",
+    "message":"User not found",
+    "code":"53360"
+};
 // this method is just created for static token for now
 router.get('/getToken',async(req,res)=>{
     var token=await jwtFunctions.createJWTToken();
@@ -45,6 +51,20 @@ router.get('/', async (req, res) => {
         // Find all user
         const user = await User.find();
         res.json(user);
+    } catch (e) {
+        res.status(500).json({ message: e.message });
+    }
+});
+// Get User by id 
+router.get('/:id', async (req, res) => {
+    try {
+        // Find user by id. Here id is int which is in your requirment 
+        const user = await User.findOne({"id":req.params.id});
+        if(user){
+            res.json(user);
+        }else{
+            res.status(500).json(userNotFoundVerifyError);
+        }   
     } catch (e) {
         res.status(500).json({ message: e.message });
     }
