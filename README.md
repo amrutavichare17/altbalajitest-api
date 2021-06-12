@@ -7,4 +7,5 @@ This README would normally document whatever steps are necessary to get your app
 * model (Third party model integration done in this folder)
 * routes (Routers are added in this folder)
 * schema (Contains all schema files)
+* test (Contains unit test of api)
 * server.js
