@@ -30,6 +30,7 @@ router.get('/getToken',async(req,res)=>{
 });
 // Create All User 
 router.post('/', async (req, res) => {
+    // id is unique entity while adding user just do not add same id it will send you duplicate entity error
     if (Array.isArray(req.body)) {
         const user=mongoose.model("user");
         try {
@@ -55,7 +56,7 @@ router.get('/', async (req, res) => {
     try {
         // Find all user
         const user = await User.find();
-        res.json(user);
+        res.status(200).json({"message":"User fetch successfully","res":user});
     } catch (e) {
         res.status(200).json({ message: e.message });
     }
@@ -66,7 +67,7 @@ router.get('/:id', async (req, res) => {
         // Find user by id. Here id is int which is in your requirment 
         const user = await User.findOne({"id":req.params.id});
         if(user){
-            res.json(user);
+            res.status(200).json({"message":"User fetch successfully","res":user});
         }else{
             res.status(200).json(userNotFoundError);
         }   
@@ -98,7 +99,7 @@ router.put("/:id", async (req, res) => {
 		}
 
 		await user.save()
-		res.send(user)
+        res.status(200).json({"message":"User updated successfully","res":user});
 	} catch {
 		res.status(200)
 		res.send(userNotFoundError)

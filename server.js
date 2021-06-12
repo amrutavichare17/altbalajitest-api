@@ -41,3 +41,4 @@ app.use(function (req, res, next) {
   const db = mongoose.connection
   db.on('error', (error) => console.error(error))
   db.once('open', startListning )
+  module.exports = app
