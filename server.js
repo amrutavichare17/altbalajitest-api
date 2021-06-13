@@ -29,15 +29,18 @@ app.use(function (req, res, next) {
   });
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+  // Listen On port
   var startListning = () => {
     app.listen(process.env.PORT || 8089, () => console.log('server started'+ 8089));
     mongoose.set("debug",true);
   };
+  // Router Config
   var ROOT_PATH = "/api";
   const userConfig = require('./routes/userrouter');
   app.use( ROOT_PATH + '/users',jwtFunctions.verifyRequest, userConfig);
-  mongoose.connect("mongodb://localhost:27017/altbalaji", { useNewUrlParser: true })
-  //mongoose.connect("mongodb+srv://amruta:amruta@123@altbalaji.sr90e.mongodb.net/antarctica?retryWrites=true&w=majority", { useNewUrlParser: true })
+ // mongoose.connect("mongodb://localhost:27017/altbalaji", { useNewUrlParser: true })
+ // Connect with database
+  mongoose.connect("mongodb+srv://amruta:amruta@123@altbalaji.sr90e.mongodb.net/altbalaji?retryWrites=true&w=majority", { useNewUrlParser: true })
   const db = mongoose.connection
   db.on('error', (error) => console.error(error))
   db.once('open', startListning )
