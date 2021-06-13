@@ -49,9 +49,7 @@ function createJWTToken(){
 	};
 	var secret = new Buffer(SECRETKEY, "base64");
 
-//	var token = jwt.sign(newUser,secret,{ expiresIn: '10h' });
-	// For now token is valid for unlimited time
-	var token = jwt.sign(newUser,secret);
+	var token = jwt.sign(newUser,secret,{ expiresIn: '96h' });
 
 	return token;
 };

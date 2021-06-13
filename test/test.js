@@ -5,7 +5,7 @@
     const chaiHttp = require('chai-http');
     const should = chai.should();
     var mongoose = require("mongoose");
-    const token='Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtcnV0YXZpY2hhcmUxN0BnbWFpbC5jb20iLCJwYXNzd29yZCI6ImFtcnV0YUAxMjMiLCJpYXQiOjE2MjM0Nzk2NzgsImV4cCI6MTYyMzUxNTY3OH0.lQ8RoUqsOOfVki-IJElTaUNlpATaQbZBm70SQDzXan4';
+    const token='Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtcnV0YXZpY2hhcmUxN0BnbWFpbC5jb20iLCJwYXNzd29yZCI6ImFtcnV0YUAxMjMiLCJpYXQiOjE2MjM1NTk2MzAsImV4cCI6MTYyMzkwNTIzMH0.jL-rIEAyolpfomStOfZ3ds_dVruklo4KFxsDoQLP09o';
     // Import server
     var server = require('../server');
 
